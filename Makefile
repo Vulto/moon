@@ -19,3 +19,4 @@ clean:
   rm $(BIN)
 
 uninstall:
+  rm &(PREFIX)&(BIN)
