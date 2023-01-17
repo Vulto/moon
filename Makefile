@@ -1,14 +1,21 @@
 VERSION = 1.0
-PREFIX = /home/vulto/C
+PREFIX = /usr/local/bin/
 BIN = moon
+SOURCE= moon.c
 
-CC=gcc
+CC = clang
+CFLAGS = -std=c2x -Wall -Wextra -Werror -pedantic-errors -Wmissing-include-dirs -Wfatal-errors -O3 -o
 
-sb-moon: moon.c
-	cc -o moon moon.c 
+make:
+  $(CC) $(CFLAGS) $(BIN) $(SOURCE)
 
-install: moon 
-	cp -f $(BIN) $(DESTDIR)$(PREFIX)/bin
+install:
+  $(CC) $(CFLAGS) $(BIN) $(SOURCE)
+  chown root:root $(BIN)
+  chmod a+s $(BIN)
+  cp -f $(BIN) $(DESTDIR)$(PREFIX)
 
 clean:
-	rm moon 
+  rm $(BIN)
+
+uninstall:
