@@ -19,28 +19,28 @@ int main(int argc, char* argv[]) {
   // Display the moon phase using Unicode characters
   switch (phase) {
     case 0:
-      printf("\'\u263E\' New Moon\n");
+      printf("New Moon\n");
       break;
     case 1:
-      printf("\u263E Waxing Crescent Moon\n");
+      printf("Waxing Crescent Moon\n");
       break;
     case 2:
-      printf("\u263E First Quarter Moon\n");
+      printf("First Quarter Moon\n");
       break;
     case 3:
-      printf("\u263E Waxing Gibbous Moon\n");
+      printf("Waxing Gibbous Moon\n");
       break;
     case 4:
-      printf("\u263E Full Moon\n");
+      printf("Full Moon\n");
       break;
     case 5:
-      printf("\u263E Waning Gibbous Moon\n");
+      printf("Waning Gibbous Moon\n");
       break;
     case 6:
-      printf("\u263E Last Quarter Moon\n");
+      printf("Last Quarter Moon\n");
       break;
     case 7:
-      printf("\u263E Waning Crescent Moon\n");
+      printf("Waning Crescent Moon\n");
       break;
   }
 
