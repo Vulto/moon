@@ -1,48 +1,71 @@
 #include <stdio.h>
+#include <math.h>
 #include <time.h>
 
-int main(int argc, char* argv[]) {
-  time_t t = time(NULL);
-  struct tm tm = *localtime(&t);
-  int day = tm.tm_mday;
-  int month = tm.tm_mon + 1;
-  int year = tm.tm_year + 1900;
+#define NEW_MOON "🌑"
+#define WAXING_CRESCENT "🌒"
+#define FIRST_QUARTER "🌓"
+#define WAXING_GIBBOUS "🌔"
+#define FULL_MOON "🌕"
+#define WANING_GIBBOUS "🌖"
+#define LAST_QUARTER "🌗"
+#define WANING_CRESCENT "🌘"
 
-  // Calculate the moon phase using the algorithm from
-  // https://www.calculatorcat.com/moon_phases/phasenow.php
-  int century = year / 100;
-  int mod1 = year % 100;
-  int mod2 = month + 12 * ((14 - month) / 12) - 2;
-  int mod3 = (day + mod1 + mod1 / 4 + century / 4 - 2 * century) % 7;
-  int phase = (mod1 + mod1 / 4 + mod3 + mod3 / 7) % 7;
+int calculateMoonPhase(int year, int month, int day) {
+    if (month < 3) {
+        month += 12;
+        year--;
+    }
 
-  // Display the moon phase using Unicode characters
-  switch (phase) {
-    case 0:
-      printf("New Moon\n");
-      break;
-    case 1:
-      printf("Waxing Crescent Moon\n");
-      break;
-    case 2:
-      printf("First Quarter Moon\n");
-      break;
-    case 3:
-      printf("Waxing Gibbous Moon\n");
-      break;
-    case 4:
-      printf("Full Moon\n");
-      break;
-    case 5:
-      printf("Waning Gibbous Moon\n");
-      break;
-    case 6:
-      printf("Last Quarter Moon\n");
-      break;
-    case 7:
-      printf("Waning Crescent Moon\n");
-      break;
-  }
+    int a = year / 100;
+    int b = 2 - a + a / 4;
+    int jd = (int)(365.25 * (year + 4716)) + (int)(30.6001 * (month + 1));
 
-  return 0;
+    jd += day + b - 1524.5;
+
+    int totalDays = jd - 2451550.1;
+    int cycles = totalDays / 29.53058867;
+
+    double fraction = totalDays / 29.53058867 - cycles;
+
+    int phase = (int)round(fraction * 8) & 7;
+
+    return phase;
+}
+
+const char* getMoonPhaseSymbol(int phase) {
+    switch (phase) {
+        case 0:
+            return NEW_MOON;
+        case 1:
+            return WAXING_CRESCENT;
+        case 2:
+            return FIRST_QUARTER;
+        case 3:
+            return WAXING_GIBBOUS;
+        case 4:
+            return FULL_MOON;
+        case 5:
+            return WANING_GIBBOUS;
+        case 6:
+            return LAST_QUARTER;
+        case 7:
+            return WANING_CRESCENT;
+        default:
+            return "Unknown Moon Phase";
+    }
+}
+
+int main() {
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+    int day = tm.tm_mday;
+    int month = tm.tm_mon + 1;
+    int year = tm.tm_year + 1900;
+
+    int phase = calculateMoonPhase(year, month, day);
+
+    printf("%s\n", getMoonPhaseSymbol(phase));
+
+    return 0;
 }

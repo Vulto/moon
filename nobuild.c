@@ -2,11 +2,11 @@
 #include "./nobuild.h"
 
 #define CFLAGS 	"-Wall", \
-				"-Wextra", \
-				"-std=c2x", \
-				"-pedantic", \
-				"-pedantic-errors", \
-				"-O3"
+        				"-Wextra", \
+				        "-std=c2x", \
+                "-pedantic", \
+                "-pedantic-errors", \
+                "-O3"
 	
 #define SOURCE "moon.c"
 #define BIN "moon"
